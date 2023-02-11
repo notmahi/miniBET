@@ -1,0 +1,81 @@
+defaults:
+  - _self_
+
+env_vars:
+  # datasets:
+  #   carla_multipath_town04_merge: /path/to/datasets/carla_dataset
+  #   relay_kitchen: /path/to/datasets/relay_kitchen_dataset
+  #   multimodal_push_fixed_target: /path/to/datasets/block_push_dataset
+  # wandb_entity: your_wandb_entity
+
+  datasets:
+    carla_multipath_town04_merge: /path/to/datasets/carla_dataset
+    relay_kitchen: /home/mahi/code/action-anticipation/action-modeling/data
+    multimodal_push_fixed_target: /path/to/datasets/block_push_dataset
+  wandb_entity: mahi
+
+
+seed: 42
+window_size: 10
+eval_window_size: 5
+batch_size: 2048
+epochs: 250
+eval_freq: 10
+eval_on_env_freq: 25
+num_env_evals: 5
+num_final_evals: 20
+num_final_eval_per_goal: 5
+
+wandb:
+  project: "min-cbet"
+  entity: ${env_vars.wandb_entity}
+
+device: cuda
+optim:
+  lr: 5.5e-5
+  weight_decay: 2e-4
+  betas: [0.9, 0.999]
+
+env:
+  gym:
+    _target_: gym.make
+    id: kitchen-v0
+  obs_dim: 60
+  act_dim: 9
+  goal_dim: 60
+
+data:
+  _target_: dataset.get_relay_kitchen_train_val
+  data_directory: ${env_vars.datasets.relay_kitchen}
+  goal_conditional: future
+  future_seq_len: ${window_size}
+
+save_every: 10
+save_path: "checkpoints/${env.gym.id}/${now:%Y-%m-%d}/${now:%H-%M-%S}"
+load_path: null
+
+model:
+  _target_: behavior_transformer.BehaviorTransformer
+  obs_dim: ${env.obs_dim}
+  act_dim: ${env.act_dim}
+  goal_dim: ${env.goal_dim}
+  n_clusters: 64
+  kmeans_fit_steps: 50
+  gpt_model:
+    _target_: behavior_transformer.GPT
+    config:
+      _target_: behavior_transformer.GPTConfig
+      block_size: 30
+      input_dim: ${env.obs_dim}
+      n_layer: 6
+      n_head: 6
+      n_embd: 120
+
+goal_fn:
+  _target_: kitchen_env.get_goal_fn
+  data_directory: ${env_vars.datasets.relay_kitchen}
+  goal_conditional: ${data.goal_conditional}
+  seed: ${seed}
+  train_fraction: 0.95
+  goal_seq_len: ${window_size}
+  unconditional: false
