@@ -1,7 +1,8 @@
 ---
 title: Scheduled workflow failed
-assignees: notmahi
-labels:
+assignees: 
+  - notmahi
+labels: 
   - bug
 ---
 

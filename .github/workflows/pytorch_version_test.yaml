@@ -90,7 +90,7 @@ jobs:
           conda install pytorch=${{ matrix.pytorch-version }} torchvision cpuonly python=${{ matrix.python-version }} -c pytorch
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          pythom -m pip install --upgrade .
+          python -m pip install --upgrade .
 
       - name: Run Tests
         shell: bash -l {0}
