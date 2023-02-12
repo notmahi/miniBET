@@ -10,7 +10,7 @@ import torch.nn.functional as F
 import torchvision
 import tqdm
 
-from gpt import GPT
+from behavior_transformer.gpt import GPT
 
 
 class KMeansDiscretizer:

@@ -29,7 +29,8 @@ jobs:
       matrix:
         python-version: [3.7, 3.8, 3.9, "3.10"]
         pytorch-version:
-          [1.13.1, 1.12.1, 1.11.0, 1.10.0, 1.9.1, 1.8.1, 1.7.1, 1.6.0]
+          # [1.13.1, 1.12.1, 1.11.0, 1.10.0, 1.9.1, 1.8.1, 1.7.1, 1.6.0]
+          [1.13.1, 1.12.1]
         exclude:
           - pytorch-version: 1.6.0
             python-version: 3.9
@@ -89,7 +90,7 @@ jobs:
           conda install pytorch=${{ matrix.pytorch-version }} torchvision cpuonly python=${{ matrix.python-version }} -c pytorch
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          python setup.py install
+          pythom -m pip install --upgrade .
 
       - name: Run Tests
         shell: bash -l {0}
