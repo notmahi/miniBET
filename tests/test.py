@@ -4,6 +4,7 @@ import unittest
 
 from behavior_transformer import BehaviorTransformer, GPT, GPTConfig
 
+
 def test(conditional=True):
     obs_dim = 50
     act_dim = 8
@@ -41,15 +42,17 @@ def test(conditional=True):
             eval_action, eval_loss, loss_dict = cbet(obs_seq, goal_seq, action_seq)
             assert eval_loss is not None, "Correct loss is outputted."
             iterator.set_postfix_str(str(eval_loss.item()))
-        assert eval_action.shape == (batch_size, T, act_dim), 'correct action outputted'
+        assert eval_action.shape == (batch_size, T, act_dim), "correct action outputted"
     return 0
 
-class TestBeT(unittest.TestCase):
-	def test_conditional_behavior_transformer(self):
-		self.assertEqual(test(conditional=True), 0)
 
-	def test_behavior_transformer(self):
-		self.assertEqual(test(conditional=False), 0)
-                
-if __name__ == '__main__':
+class TestBeT(unittest.TestCase):
+    def test_conditional_behavior_transformer(self):
+        self.assertEqual(test(conditional=True), 0)
+
+    def test_behavior_transformer(self):
+        self.assertEqual(test(conditional=False), 0)
+
+
+if __name__ == "__main__":
     unittest.main()

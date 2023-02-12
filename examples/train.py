@@ -16,6 +16,7 @@ import wandb
 if "MUJOCO_GL" not in os.environ:
     os.environ["MUJOCO_GL"] = "egl"
 
+
 def seed_everything(random_seed: int):
     np.random.seed(random_seed)
     torch.manual_seed(random_seed)

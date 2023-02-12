@@ -67,7 +67,6 @@ class RelayKitchenTrajectoryDataset(TensorDataset, TrajectoryDataset):
     def get_seq_length(self, idx):
         return int(self.masks[idx].sum().item())
 
-
     def __getitem__(self, idx):
         T = self.masks[idx].sum().int().item()
         return tuple(x[idx, :T] for x in self.tensors)
@@ -141,7 +140,7 @@ class TrajectorySlicerDataset(TrajectoryDataset):
                 # zeros placeholder T x obs_dim
                 _, obs_dim = values[0].shape
                 future_obs = torch.zeros((self.future_seq_len, obs_dim))
-                
+
             # [observations, actions, mask[, future_obs (goal conditional)]]
             values.append(future_obs)
 

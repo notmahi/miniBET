@@ -92,7 +92,9 @@ class BehaviorTransformer(nn.Module):
         assert n_clusters > 0 and kmeans_fit_steps > 0
         self._K = n_clusters
         self._kmeans_fit_steps = kmeans_fit_steps
-        self._clustering_algo = KMeansDiscretizer(num_bins=n_clusters, kmeans_iters=kmeans_iters)
+        self._clustering_algo = KMeansDiscretizer(
+            num_bins=n_clusters, kmeans_iters=kmeans_iters
+        )
         self._current_steps = 0
         self._map_to_cbet_preds = torchvision.ops.MLP(
             in_channels=gpt_model.config.output_dim,
@@ -135,14 +137,11 @@ class BehaviorTransformer(nn.Module):
         if self._current_steps == self._kmeans_fit_steps:
             logging.info("Fitting KMeans")
             self._clustering_algo.fit(
-                torch.cat(self._collected_actions, dim=0)
-                .view(-1, self._act_dim)
+                torch.cat(self._collected_actions, dim=0).view(-1, self._act_dim)
             )
             self._have_fit_kmeans = True
-            self._cluster_centers = (
-                self._clustering_algo.bin_centers
-                .float()
-                .to(action_seq.device)
+            self._cluster_centers = self._clustering_algo.bin_centers.float().to(
+                action_seq.device
             )
 
     def _predict(
@@ -244,6 +243,7 @@ class BehaviorTransformer(nn.Module):
             self._gpt_model.load_state_dict(torch.load(path / "gpt_model.pt"))
         else:
             logging.warning("No model found at %s", path)
+
 
 class FocalLoss(nn.Module):
     def __init__(self, gamma: float = 0, size_average: bool = True):
