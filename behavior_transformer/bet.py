@@ -7,11 +7,10 @@ import einops
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import torchvision
 import tqdm
 
 from behavior_transformer.gpt import GPT
-
+from behavior_transformer.utils import MLP
 
 class KMeansDiscretizer:
     """
@@ -96,7 +95,7 @@ class BehaviorTransformer(nn.Module):
             num_bins=n_clusters, kmeans_iters=kmeans_iters
         )
         self._current_steps = 0
-        self._map_to_cbet_preds = torchvision.ops.MLP(
+        self._map_to_cbet_preds = MLP(
             in_channels=gpt_model.config.output_dim,
             hidden_channels=[(act_dim + 1) * n_clusters],
         )

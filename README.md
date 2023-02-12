@@ -79,19 +79,19 @@ If you use this code in your research, please cite the appropriate following pap
 
 ```
 @inproceedings{
-shafiullah2022behavior,
-title={Behavior Transformers: Cloning $k$ modes with one stone},
-author={Nur Muhammad Mahi Shafiullah and Zichen Jeff Cui and Ariuntuya Altanzaya and Lerrel Pinto},
-booktitle={Advances in Neural Information Processing Systems},
-editor={Alice H. Oh and Alekh Agarwal and Danielle Belgrave and Kyunghyun Cho},
-year={2022},
-url={https://openreview.net/forum?id=agTr-vRQsa}
+    shafiullah2022behavior,
+    title={Behavior Transformers: Cloning $k$ modes with one stone},
+    author={Nur Muhammad Mahi Shafiullah and Zichen Jeff Cui and Ariuntuya Altanzaya and Lerrel Pinto},
+    booktitle={Advances in Neural Information Processing Systems},
+    editor={Alice H. Oh and Alekh Agarwal and Danielle Belgrave and Kyunghyun Cho},
+    year={2022},
+    url={https://openreview.net/forum?id=agTr-vRQsa}
 }
 
 @article{cui2022play,
-  title={From play to policy: Conditional behavior generation from uncurated robot data},
-  author={Cui, Zichen Jeff and Wang, Yibin and Muhammad, Nur and Pinto, Lerrel and others},
-  journal={arXiv preprint arXiv:2210.10047},
-  year={2022}
+    title={From play to policy: Conditional behavior generation from uncurated robot data},
+    author={Cui, Zichen Jeff and Wang, Yibin and Muhammad, Nur and Pinto, Lerrel and others},
+    journal={arXiv preprint arXiv:2210.10047},
+    year={2022}
 }
 ```
